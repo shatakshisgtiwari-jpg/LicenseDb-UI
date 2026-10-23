@@ -19,7 +19,7 @@ import {
 
 type NavigationItem = {
   key: "dashboard" | "users" | "license" | "obligation" | "manageClients";
-  href?: "/";
+  href?: "/" | "/licenses";
   icon: LucideIcon;
   hasSubmenu?: boolean;
 };
@@ -27,7 +27,7 @@ type NavigationItem = {
 const navigationItems: readonly NavigationItem[] = [
   { key: "dashboard", href: "/", icon: LayoutDashboard },
   { key: "users", icon: UserRound },
-  { key: "license", icon: ScrollText, hasSubmenu: true },
+  { key: "license", href: "/licenses", icon: ScrollText },
   { key: "obligation", icon: FileCheck2, hasSubmenu: true },
   { key: "manageClients", icon: UsersRound },
 ];
