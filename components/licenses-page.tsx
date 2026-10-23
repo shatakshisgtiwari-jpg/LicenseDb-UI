@@ -1,10 +1,9 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { ChevronLeft, ChevronRight, Eye, Pencil, Search, SlidersHorizontal } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search, SlidersHorizontal } from "lucide-react";
 import { useDeferredValue, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 
 type License = {
@@ -89,7 +88,7 @@ export function LicensesPage() {
         </section>
         <section className="overflow-hidden rounded-md border border-[#e2dde3] bg-white shadow-sm">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[1100px] text-left text-xs">
+            <table className="w-full min-w-[900px] text-left text-xs">
               <thead className="bg-[#f0eef1] text-[#5e5661]">
                 <tr>
                   <th scope="col" className="px-4 py-3 font-medium">{t("spdxExpression")}</th>
@@ -97,25 +96,23 @@ export function LicensesPage() {
                   <th scope="col" className="px-4 py-3 font-medium">{t("fullName")}</th>
                   <th scope="col" className="px-4 py-3 font-medium">{t("text")}</th>
                   <th scope="col" className="px-4 py-3 font-medium">{t("risk")}</th>
-                  <th scope="col" className="px-4 py-3 font-medium">{t("actions")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#eeeaf0]">
                 {licensesQuery.isError ? (
-                  <tr><td colSpan={6} className="px-4 py-8 text-center text-[#9c3b47]">{t("unavailable")}</td></tr>
+                  <tr><td colSpan={5} className="px-4 py-8 text-center text-[#9c3b47]">{t("unavailable")}</td></tr>
                 ) : licensesQuery.isLoading ? (
-                  <tr><td colSpan={6} className="px-4 py-8 text-center text-[#756b78]">{t("loading")}</td></tr>
+                  <tr><td colSpan={5} className="px-4 py-8 text-center text-[#756b78]">{t("loading")}</td></tr>
                 ) : licenses.length ? licenses.map((license) => (
                   <tr key={license.id || license.spdxId} className="text-[#3c3540]">
-                    <td className="px-4 py-3 font-medium"><Link href={`/licenses/${license.id}`} className="text-[#3c3540] hover:text-[#7b1a89] hover:underline">{license.spdxId || "-"}</Link></td>
-                    <td className="px-4 py-3"><Link href={`/licenses/${license.id}`} className="text-[#3c3540] hover:text-[#7b1a89] hover:underline">{license.shortName || "-"}</Link></td>
+                    <td className="px-4 py-3 font-medium">{license.spdxId || "-"}</td>
+                    <td className="px-4 py-3">{license.shortName || "-"}</td>
                     <td className="px-4 py-3">{license.fullName || "-"}</td>
                     <td className="max-w-80 truncate px-4 py-3" title={license.text}>{license.text || "-"}</td>
                     <td className="px-4 py-3"><span className={`inline-flex rounded px-2 py-0.5 text-[11px] font-medium ${license.risk === 5 ? "bg-[#ef3340] text-white" : license.risk === 4 ? "bg-[#f0b429] text-[#3f2d00]" : license.risk === 3 ? "bg-[#dce98b] text-[#34420b]" : license.risk === 2 ? "bg-[#8fcf8a] text-[#183f1b]" : "bg-[#f0eef1] text-[#5e5661]"}`}>{license.risk ?? "-"}</span></td>
-                    <td className="px-4 py-3"><div className="flex items-center gap-1 text-[#7b1a89]"><Button render={<Link href={`/licenses/${license.id}`} />} variant="ghost" size="icon-sm" aria-label={t("viewLicense")} title={t("viewLicense")}><Eye /></Button><Button render={<Link href={`/licenses/${license.id}/edit`} />} variant="ghost" size="icon-sm" aria-label={t("editLicense")} title={t("editLicense")}><Pencil /></Button></div></td>
                   </tr>
                 )) : (
-                  <tr><td colSpan={6} className="px-4 py-8 text-center text-[#756b78]">{t("noLicenses")}</td></tr>
+                  <tr><td colSpan={5} className="px-4 py-8 text-center text-[#756b78]">{t("noLicenses")}</td></tr>
                 )}
               </tbody>
             </table>
