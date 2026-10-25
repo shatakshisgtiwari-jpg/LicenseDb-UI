@@ -50,13 +50,13 @@ export async function GET(request: NextRequest) {
   const limit = request.nextUrl.searchParams.get("limit") ?? "10";
   const search = request.nextUrl.searchParams.get("search") ?? "";
   const sortBy = request.nextUrl.searchParams.get("sortBy");
-  const osiApproved = request.nextUrl.searchParams.get("osiApproved");
-  const copyleft = request.nextUrl.searchParams.get("copyleft");
+  const sortOrder = request.nextUrl.searchParams.get("sortOrder");
+  const risk = request.nextUrl.searchParams.get("risk");
   const query = new URLSearchParams({ active: "true", page, limit });
   if (search) query.set("search", search);
-  if (sortBy === "spdx_id" || sortBy === "shortname" || sortBy === "fullname") query.set("sort_by", sortBy);
-  if (osiApproved === "true" || osiApproved === "false") query.set("osiapproved", osiApproved);
-  if (copyleft === "true" || copyleft === "false") query.set("copyleft", copyleft);
+  if (sortBy === "shortname" || sortBy === "risk") query.set("sort_by", sortBy);
+  if (sortOrder === "asc" || sortOrder === "desc") query.set("sort_order", sortOrder);
+  if (risk && /^[0-5](,[0-5])*$/.test(risk)) query.set("risk", risk);
 
   try {
     const response = await fetchJson<{
